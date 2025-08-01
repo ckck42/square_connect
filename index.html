@@ -52,18 +52,31 @@
     </div>
 
     <script>
-        // Replace with your actual Application ID and Redirect URL from the Square Developer Dashboard.
-        const APPLICATION_ID = "sq0idp-Ne7Hv_k8mnM1RXoxtKJx6Q";
-        const REDIRECT_URL = "https://bujopdidqmroujskyjbw.supabase.co/functions/v1/square-oauth-callback";
-
-        // Define the permissions (scopes) your application needs.
-        // PAYMENTS_WRITE is required to process payments.
-        // MERCHANT_PROFILE_READ is needed to get location information.
-        const SCOPES = "PAYMENTS_WRITE+MERCHANT_PROFILE_READ";
-
         document.addEventListener('DOMContentLoaded', () => {
             const connectLink = document.getElementById('connect-link');
-            const authUrl = `https://squareup.com/oauth2/authorize?client_id=${APPLICATION_ID}&scope=${SCOPES}&session=false&redirect_uri=${REDIRECT_URL}`;
+            
+            // IMPORTANT: These values must be replaced with your actual, secure credentials.
+            // For a real application, you would fetch these from a secure API endpoint,
+            // not hardcode them in your client-side code.
+            const APPLICATION_ID = "sq0idp-Ne7Hv_k8mnM1RXoxtKJx6Q";
+            const REDIRECT_URL = "https://bujopdidqmroujskyjbw.supabase.co/functions/v1/square-oauth-callback";
+            const SCOPES = "PAYMENTS_WRITE+MERCHANT_PROFILE_READ+MERCHANT_PROFILE_WRITE";
+            
+            // This is the critical piece. You must provide a unique identifier
+            // for the location you are connecting. This value will be returned
+            // to your callback function to identify the correct client.
+            // In a real app, this would be a dynamic value (e.g., from a URL param or a database).
+            const LOCATION_ID_FOR_STATE = "LC8T8DE2VP4T0";
+
+            // Construct the full authorization URL including the state parameter.
+            const authUrl = `https://connect.squareup.com/oauth2/authorize?` +
+                            `client_id=${APPLICATION_ID}` +
+                            `&scope=${SCOPES}` +
+                            `&session=false` +
+                            `&redirect_uri=${REDIRECT_URL}` +
+                            `&state=${LOCATION_ID_FOR_STATE}`;
+
+            // Set the href of the link to the dynamically generated URL.
             connectLink.href = authUrl;
         });
     </script>
