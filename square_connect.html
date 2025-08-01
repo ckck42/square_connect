@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connect to Square - Chef Clausell</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Playfair+Display:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, .elegant-font {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-lg p-8 md:p-12 max-w-lg w-full text-center">
+        <!-- Logo Section -->
+        <div class="mb-8">
+            <!--
+                IMPORTANT: Replace the src with the URL of your uploaded 'black_transparent.png' logo.
+                For local testing, you can use a placeholder image.
+            -->
+            <img id="brand-logo"
+                 src="https://placehold.co/500x500/000/fff?text=Chef+Clausell"
+                 alt="Chef Clausell Logo"
+                 class="mx-auto h-40 w-auto object-contain"
+                 onerror="this.onerror=null;this.src='https://placehold.co/400x150/f0f4f8/000?text=Clausell\'s'" />
+        </div>
+
+        <!-- Heading and Subtext -->
+        <h1 class="elegant-font text-4xl md:text-5xl font-bold text-gray-900 mb-4">Connect Your Square Account</h1>
+        <p class="text-gray-600 mb-8">
+            Click the button below to securely link your business to our application. This is a one-time step that authorizes us to process payments on your behalf.
+        </p>
+
+        <!-- Connect Button -->
+        <!--
+            IMPORTANT: Replace the placeholders in the script below with your actual values.
+            You can find these in your Square Developer Dashboard under the "OAuth" tab.
+        -->
+        <a id="connect-link" href="#" class="inline-block">
+            <button class="connect-button text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-200 py-3 px-8 rounded-full shadow-md text-lg font-semibold tracking-wide border-2 border-blue-600 hover:border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                Connect with Square
+            </button>
+        </a>
+    </div>
+
+    <script>
+        // Replace with your actual Application ID and Redirect URL from the Square Developer Dashboard.
+        const APPLICATION_ID = "sq0idp-Ne7Hv_k8mnM1RXoxtKJx6Q";
+        const REDIRECT_URL = "https://bujopdidqmroujskyjbw.supabase.co/functions/v1/square-oauth-callback";
+
+        // Define the permissions (scopes) your application needs.
+        // PAYMENTS_WRITE is required to process payments.
+        // MERCHANT_PROFILE_READ is needed to get location information.
+        const SCOPES = "PAYMENTS_WRITE+MERCHANT_PROFILE_READ";
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const connectLink = document.getElementById('connect-link');
+            const authUrl = `https://squareup.com/oauth2/authorize?client_id=${APPLICATION_ID}&scope=${SCOPES}&session=false&redirect_uri=${REDIRECT_URL}`;
+            connectLink.href = authUrl;
+        });
+    </script>
+</body>
+</html>
